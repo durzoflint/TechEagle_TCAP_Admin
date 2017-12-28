@@ -17,13 +17,14 @@
 		if (isset($_POST['details']))
 		{$content = $_POST['details'];}
 		$details = nl2br($content);
+		$file_URI = '';
 		if(isset($_FILES["file"]) && $_FILES["file"]["error"] == 0)
 		{
 			$file = basename($_FILES['file']['name']);
 			//$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 			$DOCUMENT_ROOT = 'http://techeagle.in';
 			$upload_folder = $DOCUMENT_ROOT.'/tcap/taskfiles/';
-			$file_URI = $upload_folder . $file;
+			$file_URI = $upload_folder.$file;
 			$tmp_path = $_FILES["file"]["tmp_name"];
 			if(move_uploaded_file($_FILES["file"]["tmp_name"], "taskfiles/" . $_FILES["file"]["name"]))
 			{
@@ -39,32 +40,46 @@
 			$mm = "0".$mm;
 		if((int)$dd<10)
 			$dd = "0".$dd;
-		$deadline = $dd."/".$mm."/".$yyyy;
-		$user_info="INSERT INTO tasks(name, taskid, deadline, stages, rewardpoints, details, fileuri, expired)VALUES('$name', '$taskid','$deadline', '$stages','$rewardpoints','$details','$file_URI', 'no')";
-		$result=mysql_query($user_info);
-		if($result===false)
+		$deadline = $dd."-".$mm."-".$yyyy;
+		if (isset($_GET['taskid']))
 		{
-			echo "error: " .mysql_error();
+			$taskid = $_GET['taskid'];
+			$sql = "UPDATE tasks SET name='$name', deadline='$deadline', stages='$stages', rewardpoints='$rewardpoints', details='$details', expired='no' WHERE taskid='$taskid'";
+			$result=mysqli_query($connect, $sql);
+			if($result===false)
+			{
+				echo "error: " .mysqli_error();
+			}
+			header('Location: tasks.php');
 		}
-		$sql = "SELECT * FROM ca_users";
-		$result2 = mysql_query($sql, $connect);
-		while($row2 = mysql_fetch_array($result2, MYSQL_ASSOC))
+		else
 		{
-			$username = $row2['username'];
-			$totalProgress = calculateTotalProgress($connect, $username);
-			$sql = "UPDATE ca_users SET totalprogress = '$totalProgress' WHERE username = '$username'";
-			$result3 = mysql_query($sql);
-			if($result3 == false)
-				echo "error: " .mysql_error();
+			$user_info="INSERT INTO tasks(name, taskid, deadline, stages, rewardpoints, details, fileuri, expired)VALUES('$name', '$taskid','$deadline', '$stages','$rewardpoints','$details','$file_URI', 'no')";
+			$result=mysqli_query($connect, $user_info);
+			if($result===false)
+			{
+				echo "error: " .mysqli_error();
+			}
+			$sql = "SELECT * FROM ca_users";
+			$result2 = mysqli_query($connect, $sql);
+			while($row2 = mysqli_fetch_array($result2))
+			{
+				$username = $row2['username'];
+				$totalProgress = calculateTotalProgress($connect, $username);
+				$sql = "UPDATE ca_users SET totalprogress = '$totalProgress' WHERE username = '$username'";
+				$result3 = mysqli_query($connect, $sql);
+				if($result3 == false)
+					echo "error: " .mysqli_error();
+			}
 		}
 	}
 	function calculateTotalProgress($connect, $username)
 	{
 		$sql = "SELECT * FROM tasks";
-		$result = mysql_query($sql, $connect);
+		$result = mysqli_query($connect, $sql);
 		$sum = 0;
 		$numoftasks = 0;
-		while($row = mysql_fetch_array($result, MYSQL_ASSOC))
+		while($row = mysqli_fetch_array($result))
 		{
 			$progress = $row['progress'];
 			$index = strpos($progress, $username.":");

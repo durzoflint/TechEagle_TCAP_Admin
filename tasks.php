@@ -43,6 +43,7 @@
           <th>File Location</th>
           <th>Details</th>
           <th>Expired</th>
+          <th>Action</th>
         </thead>
         <tbody>
           <?php
@@ -53,14 +54,20 @@
             while ($row = mysqli_fetch_array($result))
             {
               echo "<tr>
-              <td>{$i}</td>
-              <td>{$row['name']}</td>
-              <td>{$row['deadline']}</td>
-              <td>{$row['stages']}</td>
-              <td>{$row['rewardpoints']}</td>
-              <td>{$row['fileuri']}</td>
-              <td>{$row['details']}</td>
-              <td>{$row['expired']}</td>
+                      <td>{$i}</td>
+                      <td>{$row['name']}</td>
+                      <td>{$row['deadline']}</td>
+                      <td>{$row['stages']}</td>
+                      <td>{$row['rewardpoints']}</td>
+                      <td>{$row['fileuri']}</td>
+                      <td>{$row['details']}</td>
+                      <td>{$row['expired']}</td>
+                      <td>
+                      <form action='edittask.php?taskid={$row['taskid']}' method='POST'>
+                        <button name='edit' class='btn' value='edit'>Edit</button>
+                        <br><br>
+                        <button name='delete' class='btn btn-danger' value='delete'>Delete</button>
+                      </form>
               </tr>";
               $i++;
             }
