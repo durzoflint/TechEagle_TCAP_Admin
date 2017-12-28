@@ -30,7 +30,7 @@
       </div>
     </nav>
     <br>
-    <div class="container-fluid">
+    <div style="overflow: auto;" class="container-fluid">
       <table class="table table-bordered">
         <thead>
           <th>S. No.</th>

@@ -30,7 +30,7 @@
       </div>
     </nav>
     <br>
-    <div class="container-fluid">
+    <div style="overflow: auto;" class="container-fluid">
       <a href="./addca.html" class="btn btn-info">Add New CA</a>
       <br><br>
       <table class="table table-bordered">
