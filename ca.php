@@ -55,11 +55,12 @@
             $i = 1;
             while ($row = mysqli_fetch_array($result))
             {
+              $username = $row['username'];
               echo "<tr>
               <td>{$i}</td>
               <td>{$row['firstname']} {$row['lastname']}</td>
               <td>{$row['tcap_id']}</td>
-              <td>{$row['username']}</td>
+              <td><a href='cadetails.php?username={$username}'>$username</a></td>
               <td>{Under Developement}</td>
               <td>{$row['points']}</td>
               <td>{$row['totalprogress']}</td>

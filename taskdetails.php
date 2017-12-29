@@ -77,7 +77,7 @@
           $percent3 = substr($percent3, 0, 6);
         echo "<br><br><strong>Compeleted/Attempted : </strong>".$completed."/".$attempted." ($percent1%)";
         echo "<br><strong>Compeleted/All : </strong>".$completed."/".$num_rows." ($percent2%)";
-        echo "<br><strong>Compeleted/All : </strong>".$attempted."/".$num_rows." ($percent3%)";
+        echo "<br><strong>Attempted/All : </strong>".$attempted."/".$num_rows." ($percent3%)";
       ?>
     </div>
     <div>
