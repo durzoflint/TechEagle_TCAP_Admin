@@ -72,8 +72,7 @@
                 }
                 else
                 {
-                  $leftSide = substr($progress, 0, $index);
-                  $progress = substr($progress, $index);
+                  $progress = substr($progress, $index + strlen($username) + 1);
                   $num = (int)substr($progress, 0, strpos($progress, ","));
                   echo "<td>{$num}/{$row2['stages']}</td>";
                 }
