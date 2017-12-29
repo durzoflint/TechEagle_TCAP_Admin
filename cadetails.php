@@ -37,12 +37,12 @@
         $sql = "SELECT * FROM ca_users WHERE username = '$username'";
         $result = mysqli_query($connect, $sql);
         $row = mysqli_fetch_array($result);
-        echo "<strong>Name : </strong>".$row['firstname']." ".$row['lastname']."<br><strong>Email : </strong>".$row['username']."<br><strong>TechEagle Id : </strong>".$row['tcap_id']."<br><strong>Number : </strong>".$row['number']."<br><strong>Points : ".$row['points']."</strong><br><strong>Date of Birth : </strong>".$row['dob']."<br><strong>Gender : </strong>".$row['gender']."<br><strong>Address :</strong> ".$row['address']."<br><br>";
-        $totalprogress = $row['totalprogress'];
+        echo "<strong>Name : </strong>".$row['firstname']." ".$row['lastname']."<br><strong>Email : </strong>".$row['username']."<br><strong>TechEagle Id : </strong>".$row['tcap_id']."<br><strong>Number : </strong>".$row['number']."<br><strong>Points : ".$row['points']."</strong><br><strong>Date of Birth : </strong>".$row['dob']."<br><strong>Gender : </strong>".$row['gender']."<br><strong>Address :</strong> ".$row['address']."<br><strong>Total Progress :</strong> ".$row['totalprogress']."%<br><br>";
         $sql = "SELECT * FROM tasks";
         $result = mysqli_query($connect, $sql);
         while($row = mysqli_fetch_array($result))
         {
+          $taskid = $row['taskid'];
           $progress = $row['progress']."<br>";
           $index = strpos($progress, $username.":");
           echo "<strong>Task Name : </strong>".$row['name']."<br><strong>Deadline : </strong>".$row['deadline']."<br><strong>Completion : </strong>";
@@ -58,9 +58,15 @@
           {
             echo "0";
           }
-          echo "/".$row['stages']."<br><br>";
+          echo "/".$row['stages']."<br><strong>Feedback/Query</strong><br>";
+          $sql2 = "SELECT * FROM feedback_and_query WHERE username = '$username' AND taskid = '$taskid'";
+          $result2 = mysqli_query($connect, $sql2);
+          while($row2 = mysqli_fetch_array($result2))
+          {
+            echo $row2['feedback']."<br>";
+          }
+          echo "<br>";
         }
-        echo "<strong>Total Progress :</strong> ".$totalprogress."%<br>";
       ?>
     </div>
   </body>
