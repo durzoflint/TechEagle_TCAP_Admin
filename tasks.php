@@ -55,7 +55,7 @@
             {
               echo "<tr>
                       <td>{$i}</td>
-                      <td>{$row['name']}</td>
+                      <td class='mytask'><a href='taskdetails.php?taskid={$row['taskid']}'>{$row['name']}</a></td>
                       <td>{$row['deadline']}</td>
                       <td>{$row['stages']}</td>
                       <td>{$row['rewardpoints']}</td>
@@ -63,11 +63,12 @@
                       <td>{$row['details']}</td>
                       <td>{$row['expired']}</td>
                       <td>
-                      <form action='edittask.php?taskid={$row['taskid']}' method='POST'>
-                        <button name='edit' class='btn' value='edit'>Edit</button>
-                        <br><br>
-                        <button name='delete' class='btn btn-danger' value='delete'>Delete</button>
-                      </form>
+                        <form action='edittask.php?taskid={$row['taskid']}' method='POST'>
+                          <button name='edit' class='btn' value='edit'>Edit</button>
+                          <br><br>
+                          <button name='delete' class='btn btn-danger' value='delete'>Delete</button>
+                        </form>
+                      </td>
               </tr>";
               $i++;
             }

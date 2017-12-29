@@ -53,10 +53,11 @@
   			<input style="text-align: center; margin-top: 5vh; width: 25vw;" required type="number" placeholder="Stages" name="stages" value="<?php echo $row['stages'];?>"><br>
   			<input style="text-align: center; margin-top: 5vh; width: 25vw;" required type="number" placeholder="Reward Points" name="rewardpoints" value="<?php echo $row['rewardpoints'];?>"><br>
   			<textarea style="margin-top: 5vh;  width: 25vw; resize: none;" rows="10" name="details" placeholder="Details" form="addtasks"><?php echo str_replace("<br />", "", $row['details']);?></textarea><br><br>
-        <?php echo "File Selected<br>".$row['fileuri'];?>
+        <?php echo "Files cannot be changed here. To change file, please go back, delete this task and add new task.<br>".$row['fileuri'];?>
         <br>
-  			<input style="text-align: center; margin-top: 5vh;" class="btn" type="submit" name="submit" value="Add">
+  			<input style="text-align: center; margin-top: 5vh;" class="btn" type="submit" name="submit" value="Finish">
   		</form>
     </div>
+    <br>
   </body>
 </html>
