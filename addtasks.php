@@ -15,7 +15,7 @@
 		if (isset($_POST['stages']))
 		{$stages = $_POST['stages'];}
 		if (isset($_POST['details']))
-		{$content = $_POST['details'];}
+		{$content = mysqli_real_escape_string($connect, $_POST['details']);}
 		$details = nl2br($content);
 		$file_URI = '';
 		if(isset($_FILES["file"]) && $_FILES["file"]["error"] == 0)
@@ -32,7 +32,7 @@
 			}
 			else
 			{
-				echo "Error";
+				echo "Error while uploading";
 			}
 		}
 		$taskid = uniqid();
@@ -44,7 +44,7 @@
 			$result=mysqli_query($connect, $sql);
 			if($result===false)
 			{
-				echo "error: " .mysqli_error();
+				echo "error: " .mysqli_error($connect);
 			}
 			header('Location: tasks.php');
 		}
@@ -54,7 +54,7 @@
 			$result=mysqli_query($connect, $user_info);
 			if($result===false)
 			{
-				echo "error: " .mysqli_error();
+				echo "error: " .mysqli_error($connect);
 			}
 			$sql = "SELECT * FROM ca_users";
 			$result2 = mysqli_query($connect, $sql);
@@ -65,7 +65,7 @@
 				$sql = "UPDATE ca_users SET totalprogress = '$totalProgress' WHERE username = '$username'";
 				$result3 = mysqli_query($connect, $sql);
 				if($result3 == false)
-					echo "error: " .mysqli_error();
+					echo "error: " .mysqli_error($connect);
 			}
 		}
 	}
