@@ -37,7 +37,8 @@
         $sql = "SELECT * FROM ca_users WHERE username = '$username'";
         $result = mysqli_query($connect, $sql);
         $row = mysqli_fetch_array($result);
-        echo "<strong>Name : </strong>".$row['firstname']." ".$row['lastname']."<br><strong>Email : </strong>".$row['username']."<br><strong>TechEagle Id : </strong>".$row['tcap_id']."<br><strong>Number : </strong>".$row['number']."<br><strong>Points : ".$row['points']."</strong><br><strong>Date of Birth : </strong>".$row['dob']."<br><strong>Gender : </strong>".$row['gender']."<br><strong>Address :</strong> ".$row['address']."<br><strong>Total Progress :</strong> ".$row['totalprogress']."%<br><br>";
+        $points = $row['points'];
+        echo "<strong>Name : </strong>".$row['firstname']." ".$row['lastname']."<br><strong>Email : </strong>".$row['username']."<br><strong>TechEagle Id : </strong>".$row['tcap_id']."<br><strong>Number : </strong>".$row['number']."<br><strong>Points : ".$points."</strong><br><strong>Date of Birth : </strong>".$row['dob']."<br><strong>Gender : </strong>".$row['gender']."<br><strong>Address :</strong> ".$row['address']."<br><strong>Total Progress :</strong> ".$row['totalprogress']."%<br><br>";
         $sql = "SELECT * FROM tasks";
         $result = mysqli_query($connect, $sql);
         while($row = mysqli_fetch_array($result))
@@ -58,12 +59,19 @@
           {
             echo "0";
           }
-          echo "/".$row['stages']."<br><strong>Feedback/Query</strong><br>";
+          echo "/".$row['stages']."<br><p style='float:left;'><strong>Bonus :&nbsp;</strong></p>";
+          echo "<form action='changepoints.php?username={$username}&prevpoints={$points}' method='POST'>
+                  <input name='points' type='number'>
+                  <input type='submit'>
+                </form><br>";
+          echo "<strong>Feedback/Query</strong><br>";
           $sql2 = "SELECT * FROM feedback_and_query WHERE username = '$username' AND taskid = '$taskid'";
           $result2 = mysqli_query($connect, $sql2);
+          $i = 1;
           while($row2 = mysqli_fetch_array($result2))
           {
-            echo $row2['feedback']."<br>";
+            echo $i.") ".$row2['feedback']."<br>";
+            $i = $i + 1;
           }
           echo "<br>";
         }

@@ -26,7 +26,7 @@
 			$upload_folder = $DOCUMENT_ROOT.'/tcap/taskfiles/';
 			$file_URI = $upload_folder.$file;
 			$tmp_path = $_FILES["file"]["tmp_name"];
-			if(move_uploaded_file($_FILES["file"]["tmp_name"], "taskfiles/" . $_FILES["file"]["name"]))
+			if(move_uploaded_file($_FILES["file"]["tmp_name"], "../taskfiles/" . $_FILES["file"]["name"]))
 			{
 				echo "Upload Complete";
 			}
@@ -36,10 +36,6 @@
 			}
 		}
 		$taskid = uniqid();
-		if((int)$mm<10)
-			$mm = "0".$mm;
-		if((int)$dd<10)
-			$dd = "0".$dd;
 		$deadline = $dd."-".$mm."-".$yyyy;
 		if (isset($_GET['taskid']))
 		{
